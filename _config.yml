@@ -1,0 +1,9 @@
+remote_theme: daviddarnes/alembic@main
+plugins:
+- jekyll-remote-theme
+
+title: Product categories
+description: Test of determenation the product categories
+
+author:
+  name: Kirill Anisimov
