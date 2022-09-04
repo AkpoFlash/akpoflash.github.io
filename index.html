@@ -17,7 +17,7 @@ layout: page
     <input id="photos" type="file" multiple="">
     <script>
         function probabilityFormatter(label, probability) {
-            return `${label} - probability is ${parseFloat(probability).toFixed(3)}}`;
+            return `<b>${label}</b> - probability is <b>${parseFloat(probability).toFixed(3)}</b>`;
         }
 
         async function load(reader) {
@@ -38,6 +38,8 @@ layout: page
                 <p>${probabilityFormatter(data[0]['label'], data[0]['confidence'])}</p>
                 <p>${probabilityFormatter(data[1]['label'], data[1]['confidence'])}</p>
                 <p>${probabilityFormatter(data[2]['label'], data[2]['confidence'])}</p>
+
+                <p><i>Time spend on calculation: ${json['duration']}</i></p>
             `
         }
 
