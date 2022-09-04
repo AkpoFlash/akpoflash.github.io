@@ -16,7 +16,11 @@ layout: page
 <body>
     <input id="photos" type="file" multiple="">
     <script>
-        async function loaded(reader) {
+        function probabilityFormatter(label, probability) {
+            return `${label} - probability is ${parseFloat(probability).toFixed(3)}}`;
+        }
+
+        async function load(reader) {
             const response = await fetch('https://hf.space/embed/akpoflash/product-categories/+/api/predict', {
                 method: "POST", body: JSON.stringify({ "data": [reader.result] }),
                 headers: { "Content-Type": "application/json" }
@@ -24,19 +28,22 @@ layout: page
 
             const json = await response.json();
             const data = json['data'][0]['confidences'];
-            const first = `${data[0]['label']} - ${data[0]['confidence']}`;
-            const second = `${data[1]['label']} - ${data[1]['confidence']}`;
-            const third = `${data[2]['label']} - ${data[2]['confidence']}`;
 
             console.log(json);
 
             const content = document.getElementById('content');
-            content.innerHTML = `<br/><img src="${reader.result}" width="300"> <p>${first}</p><p>${second}</p><p>${third}</p>`
+            content.innerHTML = `
+                <br/><img src="${reader.result}" width="300">
+                <p>Top 3 probabilities:</p>
+                <p>${probabilityFormatter(data[0]['label'], data[0]['confidence'])}</p>
+                <p>${probabilityFormatter(data[1]['label'], data[1]['confidence'])}</p>
+                <p>${probabilityFormatter(data[2]['label'], data[2]['confidence'])}</p>
+            `
         }
 
         function read(file) {
             const reader = new FileReader();
-            reader.addEventListener('load', () => loaded(reader))
+            reader.addEventListener('load', () => load(reader))
             reader.readAsDataURL(file);
         }
 
