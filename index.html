@@ -27,12 +27,11 @@ layout: page
             const first = `${data[0]['label']} - ${data[0]['confidence']}`;
             const second = `${data[1]['label']} - ${data[1]['confidence']}`;
             const third = `${data[2]['label']} - ${data[2]['confidence']}`;
-            
+
             console.log(json);
 
-            const div = document.createElement('div');
-            div.innerHTML = `<br/><img src="${reader.result}" width="300"> <p>${first}</p><p>${second}</p><p>${third}</p>`
-            document.body.append(div);
+            const content = document.getElementById('content');
+            content.innerHTML = `<br/><img src="${reader.result}" width="300"> <p>${first}</p><p>${second}</p><p>${third}</p>`
         }
 
         function read(file) {
@@ -43,6 +42,7 @@ layout: page
 
         photos.addEventListener('input', () => { [...photos.files].map(read) });
     </script>
+    <div id="content"></div>
 </body>
 
 </html>
