@@ -21,12 +21,17 @@ layout: page
                 method: "POST", body: JSON.stringify({ "data": [reader.result] }),
                 headers: { "Content-Type": "application/json" }
             });
-            
+
             const json = await response.json();
-            const label = json['data'][0]['confidences'][0]['label'];
+            const data = json['data'][0]['confidences'];
+            const first = `${data[0]['label']} - ${data[0]['confidence']}`;
+            const second = `${data[1]['label']} - ${data[1]['confidence']}`;
+            const third = `${data[2]['label']} - ${data[2]['confidence']}`;
+            
             console.log(json);
+
             const div = document.createElement('div');
-            div.innerHTML = `<br/><img src="${reader.result}" width="300"> <p>${label}</p>`
+            div.innerHTML = `<br/><img src="${reader.result}" width="300"> <p>${first}</p><p>${second}</p><p>${third}</p>`
             document.body.append(div);
         }
 
